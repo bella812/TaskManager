@@ -81,4 +81,7 @@ export class DashboardComponent implements OnInit {
     ]},
   ];
   }
+  onProjectChange($event){
+    console.log($event.target.innerHTML);
+  }
 }
