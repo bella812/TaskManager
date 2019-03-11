@@ -6,10 +6,11 @@
 </nav>
 
 <h5>Dashboard</h5>
+<h6>{{ToDay | date: "mediumDate"}}</h6>
 <div class="row">
   <div class="col-lg-3 pb-3" style="background-color: #e9e6e6">
     <div class="row">
-      <div class="col-11 text-white text-center mx-2 rounded pt-2 pv-2 font-weight-bold" style="background-color: #a39e9e; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"> {{Designation}} </div>
+      <div class="col-11 text-white text-center mx-2 rounded pt-2 pv-2 font-weight-bold" style="background-color: #a39e9e; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"> {{Designation | uppercase}} </div>
       <div class="col-12 text-center mt-2">
         <img src="assets/user.png" width="120px">
       </div>
@@ -33,15 +34,16 @@
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
               UPCOMING PROJECTS
-            <span class="badge badge-secondary badge-pill" style="font-size:13px"> {{UpComingProjects}} </span>
+            <span class="badge badge-secondary badge-pill" style="font-size:13px"> {{UpComingProjects | percent}} </span>
           </li>
         </ul>
       </div>
       <div class="col-12 text-center pt-2 pb-2" style="font-family: 'Ariel Narrow'">CLIENT</div>
       <div class="col-12">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let client of Clients">{{client}}</li>
+          <li class="list-group-item" *ngFor="let client of Clients">{{client | slice: 0: 10}}</li>
         </ul>
+        <!-- {{TeamMembersSummary | json}} -->
       </div>
     </div>
   </div>
@@ -65,7 +67,14 @@
                 2019
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" *ngFor="let year of Years">{{year}}</a>
+                <a class="dropdown-item" href="#" *ngFor="let year of Years">
+                  <span [ngSwitch]="year">
+                    <span *ngSwitchCase="'2019'" style="color:green">{{year}}</span>
+                    <span *ngSwitchCase="'2018'" style="color:blue">{{year}}</span>
+                    <span *ngSwitchCase="'2017'" style="color:red">{{year}}</span>
+                    <span *ngSwitchDefault style="color:black">{{year}}</span>
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -76,7 +85,7 @@
         <table class="table table-borderless">
           <tr>
             <td>Project Cost</td>
-            <td>${{ProjectCost}}</td>
+            <td>${{ProjectCost | currency: "USD"}}</td>
           </tr>
           <tr>
             <td>Current Expenditure</td>
